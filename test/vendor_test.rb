@@ -23,11 +23,13 @@ class VendorTest < Minitest::Test
   def test_it_starts_with_no_inventory
     assert_equal ({}), @vendor.inventory
   end
+
+  def test_it_can_check_stock
+    assert_equal 0, @vendor.check_stock(@item1)
+  end
 end
 
-# pry(main)> vendor.check_stock(item1)
-# #=> 0
-#
+
 # pry(main)> vendor.stock(item1, 30)
 #
 # pry(main)> vendor.inventory
