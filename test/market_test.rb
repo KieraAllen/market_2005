@@ -18,14 +18,12 @@ class MarketTest < Minitest::Test
   def test_it_can_read_attributes
     assert_equal "South Pearl Street Farmers Market", @market.name
   end
+
+  def test_that_it_stars_with_no_vendors
+    assert_equal [], @market.vendors
+  end
 end
 
-# pry(main)> market.vendors
-# #=> []
-#
-# pry(main)>
-# #=> #<Vendor:0x00007fe1348a1160...>
-#
 # pry(main)> item1 = Item.new({name: 'Peach', price: "$0.75"})
 # #=> #<Item:0x007f9c56740d48...>
 #
