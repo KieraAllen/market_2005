@@ -24,6 +24,7 @@ class MarketTest < Minitest::Test
 
     @vendor3 = Vendor.new("Palisade Peach Shack")
     @vendor3.stock(@item1, 65)
+    @vendor3.stock(@item3, 10)
   end
 
   def test_it_exists
@@ -39,10 +40,10 @@ class MarketTest < Minitest::Test
   end
 
   def test_it_can_add_and_list_vendors
-  @market.add_vendor(@vendor1)
-  @market.add_vendor(@vendor2)
-  @market.add_vendor(@vendor3)
-  assert_equal [@vendor1, @vendor2, @vendor3], @market.vendors
+    @market.add_vendor(@vendor1)
+    @market.add_vendor(@vendor2)
+    @market.add_vendor(@vendor3)
+    assert_equal [@vendor1, @vendor2, @vendor3], @market.vendors
   end
 
   def test_it_can_list_vendor_names
@@ -61,4 +62,44 @@ class MarketTest < Minitest::Test
     assert_equal [@vendor1, @vendor3], @market.vendors_that_sell(@item1)
     assert_equal [@vendor2], @market.vendors_that_sell(@item4)
   end
+
+  def test_it_can_get_total_inventory
+    @market.add_vendor(@vendor1)
+    @market.add_vendor(@vendor2)
+    @market.add_vendor(@vendor3)
+
+    expected = {
+        @item1 => {
+          quantity: 100,
+          vendors: [@vendor1, @vendor3]
+        },
+        @item2 => {
+          quantity: 7,
+          vendors: [@vendor1]
+        },
+        @item4 => {
+          quantity: 50,
+          vendors: [@vendor2]
+        },
+        @item3 => {
+          quantity: 35,
+          vendors: [@vendor2, @vendor3]
+        },
+      }
+
+    assert_equal expected, @market.total_inventory
+  end
+
+  def test_it_can_identify_overstocked_items
+    @market.add_vendor(@vendor1)
+    @market.add_vendor(@vendor2)
+    @market.add_vendor(@vendor3)
+
+    assert_equal [@item1], @market.overstocked_items
+  end
 end
+
+
+
+# pry(main)> market.sorted_item_list
+# #=> ["Banana Nice Cream", "Peach", "Peach-Raspberry Nice Cream", "Tomato"]

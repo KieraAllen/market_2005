@@ -22,4 +22,35 @@ class Market
       vendor.inventory.include?(item)
     end
   end
+
+  def total_inventory
+    total = {}
+    items = @vendors.flat_map {|vendor| vendor.inventory.keys}.uniq
+    items.each do |item|
+      vendors_for_item = vendors_that_sell(item)
+      total_amount = vendors_for_item.sum {|vendor| vendor.inventory[item]}
+      total[item] = {quantity: total_amount, vendors: vendors_for_item}
+    end
+    total
+  end
+
+  def overstocked_items
+    overstock = []
+    total_inventory.find_all do |item, info|
+      if info[:quantity] > 50 && info[:vendors].length > 1
+        overstock << item
+      end
+    end
+    overstock
+  end
+
+  def overstocked_items
+    overstock = []
+    total_inventory.find_all do |item, info|
+      if info[:quantity] > 50 && info[:vendors].length > 1
+        overstock << item
+      end
+    end
+    overstock
+  end
 end
