@@ -53,4 +53,12 @@ class Market
     end
     overstock
   end
+
+  def sorted_item_list
+    sorted_items = []
+    total_inventory.each do |item, _|
+      sorted_items << item.name
+    end
+    sorted_items.sort
+  end
 end
