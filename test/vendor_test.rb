@@ -19,11 +19,12 @@ class VendorTest < Minitest::Test
   def test_it_has_attributes
     assert_equal "Rocky Mountain Fresh", @vendor.name
   end
+
+  def test_it_starts_with_no_inventory
+    assert_equal ({}), @vendor.inventory
+  end
 end
 
-# pry(main)> vendor.inventory
-# #=> {}
-#
 # pry(main)> vendor.check_stock(item1)
 # #=> 0
 #
